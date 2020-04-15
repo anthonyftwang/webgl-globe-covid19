@@ -1,5 +1,5 @@
 # webgl-globe-covid19
-Visualize global confirmed cases of COVID-19. Updated daily at [earth.fightingcovid.net](https://earth.fightingcovid.net).
+Visualize global confirmed cases of COVID-19. Updated daily at [earth.fightingcovid.net](https://earth.fightingcovid.net/#dashboard).
 
 ![screenshot](screenshot.png)
 
