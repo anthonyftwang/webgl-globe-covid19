@@ -20,7 +20,7 @@ for row in reader:
         cases = 0 # guarantee normalization works (use 1s for logarithmic)
     else:
         cases = float(row.get(next(reversed(row))))
-    s = row.get('Lat') + ', ' + row.get('Long') + ', ' + str((cases**0.4)*0.01) # improves viewability
+    s = row.get('Lat') + ', ' + row.get('Long') + ', ' + str((cases**0.4)*0.005) # improves viewability
     rows.append(s)
 s = ', '.join(rows)
 jsonfile.write(s)
@@ -35,7 +35,7 @@ for row in reader:
         cases = 0 # guarantee normalization works (use 1s for logarithmic)
     else:
         cases = float(row.get(next(reversed(row))))
-    s = row.get('Lat') + ', ' + row.get('Long_') + ', ' + str((cases**0.4)*0.01) # improves viewability
+    s = row.get('Lat') + ', ' + row.get('Long_') + ', ' + str((cases**0.4)*0.005) # improves viewability
     rows.append(s)
 s = ', '.join(rows)
 jsonfile.write(s)
