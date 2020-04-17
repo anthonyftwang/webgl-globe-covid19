@@ -2,6 +2,15 @@ import csv
 import json
 import math
 
+LOG_DEVIATION = 0.45 # valid on 0<n<1: 0 => log(x), 1 => xlog(x)
+LIN_SCALING = 0.00025
+
+def scale(cases):
+    if cases < 0: # domain{log(x+1)}
+        cases = 0
+    z = ((cases**LOG_DEVIATION)*(math.log(cases+1)))
+    return (z * LIN_SCALING)
+
 csvfile_deaths_global = open('time_series_covid19_deaths_global.csv', 'r')
 csvfile_deaths_US = open('time_series_covid19_deaths_US.csv', 'r')
 jsonfile = open('globe/covid19_deaths.json', 'w')
@@ -16,11 +25,8 @@ rows = []
 for row in reader:
     if row.get('Country/Region') == 'US':
         continue # omit US (added separately)
-    if float(row.get(next(reversed(row)))) < 0:
-        cases = 0 # guarantee normalization works (use 1s for logarithmic)
-    else:
-        cases = float(row.get(next(reversed(row))))
-    s = row.get('Lat') + ', ' + row.get('Long') + ', ' + str((cases**0.4)*0.005) # improves viewability
+    cases = float(row.get(next(reversed(row))))
+    s = row.get('Lat') + ', ' + row.get('Long') + ', ' + str(scale(cases))
     rows.append(s)
 s = ', '.join(rows)
 jsonfile.write(s)
@@ -31,11 +37,8 @@ jsonfile.write(', ')
 reader = csv.DictReader(csvfile_deaths_US)
 rows = []
 for row in reader:
-    if float(row.get(next(reversed(row)))) < 0:
-        cases = 0 # guarantee normalization works (use 1s for logarithmic)
-    else:
-        cases = float(row.get(next(reversed(row))))
-    s = row.get('Lat') + ', ' + row.get('Long_') + ', ' + str((cases**0.4)*0.005) # improves viewability
+    cases = float(row.get(next(reversed(row))))
+    s = row.get('Lat') + ', ' + row.get('Long_') + ', ' + str(scale(cases))
     rows.append(s)
 s = ', '.join(rows)
 jsonfile.write(s)
@@ -47,4 +50,3 @@ jsonfile.write(']')
 csvfile_deaths_global.close()
 csvfile_deaths_US.close()
 jsonfile.close()
-
