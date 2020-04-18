@@ -28,8 +28,8 @@ for row in reader:
     cases = float(row.get(next(reversed(row))))
     s = row.get('Lat') + ', ' + row.get('Long') + ', ' + str(scale(cases))
     rows.append(s)
-s = ', '.join(rows)
-jsonfile.write(s)
+t = ', '.join(rows)
+jsonfile.write(t)
 
 jsonfile.write(', ')
 
@@ -40,8 +40,8 @@ for row in reader:
     cases = float(row.get(next(reversed(row))))
     s = row.get('Lat') + ', ' + row.get('Long_') + ', ' + str(scale(cases))
     rows.append(s)
-s = ', '.join(rows)
-jsonfile.write(s)
+t = ', '.join(rows)
+jsonfile.write(t)
 
 jsonfile.write(']\n    ]\n')
 
