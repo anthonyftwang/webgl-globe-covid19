@@ -26,7 +26,10 @@ for row in reader:
     if row.get('Country/Region') == 'US':
         continue # omit US (added separately)
     cases = float(row.get(next(reversed(row))))
-    s = row.get('Lat') + ', ' + row.get('Long') + ', ' + str(scale(cases))
+    coords = [row.get('Lat'), row.get('Long')]
+    if coords == ['', '']:
+        coords = ['0', '0']
+    s = coords[0] + ', ' + coords[1] + ', ' + str(scale(cases))
     rows.append(s)
 t = ', '.join(rows)
 jsonfile.write(t)
@@ -38,7 +41,10 @@ reader = csv.DictReader(csvfile_deaths_US)
 rows = []
 for row in reader:
     cases = float(row.get(next(reversed(row))))
-    s = row.get('Lat') + ', ' + row.get('Long_') + ', ' + str(scale(cases))
+    coords = [row.get('Lat'), row.get('Long_')]
+    if coords == ['', '']:
+        coords = ['0', '0']
+    s = coords[0] + ', ' + coords[1] + ', ' + str(scale(cases))
     rows.append(s)
 t = ', '.join(rows)
 jsonfile.write(t)
